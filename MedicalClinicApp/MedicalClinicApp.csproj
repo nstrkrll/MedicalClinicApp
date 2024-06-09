@@ -10,4 +10,9 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="bootstrap" Version="5.3.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
+  </ItemGroup>
+
 </Project>
