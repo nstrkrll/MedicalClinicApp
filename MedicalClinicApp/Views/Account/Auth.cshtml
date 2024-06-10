@@ -1,0 +1,38 @@
+﻿@model MedicalClinicApp.Models.ViewModels.UserViewModel
+
+<div class="row d-flex align-items-center">
+    <div class="col-sm-12">
+        <div class="row justify-content-center">
+            <div class="col-8 text-center">
+                <h2>Авторизация</h2>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-8 text-center">
+                <form asp-action="Auth" asp-controller="Account" asp-anti-forgery="true">
+                    <div asp-validation-summary="ModelOnly" class="badge bg-danger"></div>
+                    <div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="Login" asp-for="Login" placeholder="example@mail.com" />
+                            <label for="Login">Email</label>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <span asp-validation-for="Login" class="badge bg-danger"></span>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control form-control-sm" id="Password" asp-for="Password" placeholder="Password" />
+                            <label for="Password">Пароль</label>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <span asp-validation-for="Password" class="badge bg-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" value="Войти" class="btn btn-outline-dark form-control" />
+                        </div>
+                    </div>
+                </form>
+                <label>Нет аккаунта? <a asp-controller="Account" asp-action="Register">Регистрация</a></label>
+            </div>
+        </div>
+    </div>
+</div>
