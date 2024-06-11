@@ -9,11 +9,11 @@ namespace MedicalClinicApp.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly AccountRepository _repository;
+        private readonly AccountRepository _accountRepository;
 
-        public AccountController(AccountRepository repository)
+        public AccountController(AccountRepository accountRepository)
         {
-            _repository = repository;
+            _accountRepository = accountRepository;
         }
 
         [HttpGet]
@@ -30,17 +30,34 @@ namespace MedicalClinicApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Auth(UserViewModel credentials)
+        public async Task<IActionResult> Auth(UserViewModel credentials)
         {
             if (ModelState.IsValid)
             {
-                if (_repository.CheckAuth(credentials))
+                if (await _accountRepository.CheckAuth(credentials))
                 {
                     await Authenticate(credentials.Login);
                     return RedirectToAction("Index", "Home");
                 }
 
-                ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                ModelState.AddModelError("Login", "Некорректные логин и(или) пароль");
+            }
+
+            return View(credentials);
+        }
+
+        public async Task<IActionResult> Register(UserViewModel credentials)
+        {
+            if (await _accountRepository.Get(credentials.Login) != null)
+            {
+                ModelState.AddModelError("Login", "Пользователь с таким логином уже зарегистрирован");
+            }
+
+            if (ModelState.IsValid)
+            {
+                await _accountRepository.Register(credentials);
+                await Authenticate(credentials.Login);
+                return RedirectToAction("Index", "Home");
             }
 
             return View(credentials);
@@ -48,30 +65,18 @@ namespace MedicalClinicApp.Controllers
 
         private async Task Authenticate(string email)
         {
+            var currentUser = await _accountRepository.Get(email);
             var claims = new List<Claim>
             {
-                new Claim(ClaimsIdentity.DefaultNameClaimType, email)
+                new Claim("Email", email),
+                new Claim("Role", currentUser.RoleId.ToString())
             };
 
             var id = new ClaimsIdentity(claims, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
-        public async Task<ActionResult> Register(UserViewModel credentials)
-        {
-            if (ModelState.IsValid)
-            {
-                if (_repository.Register(credentials))
-                {
-                    await Authenticate(credentials.Login);
-                    return RedirectToAction("Index", "Home");
-                }
-            }
-
-            return View(credentials);
-        }
-
-        public async Task<ActionResult> Logout()
+        public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Auth", "Account");

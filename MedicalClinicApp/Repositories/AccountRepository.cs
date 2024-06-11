@@ -1,11 +1,14 @@
-﻿using MedicalClinicApp.Models;
+﻿
+using MedicalClinicApp.Models;
 using MedicalClinicApp.Models.ViewModels;
 using MedicalClinicApp.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace MedicalClinicApp.Repositories
 {
-    public class AccountRepository
+    public class AccountRepository : IDisposable
     {
+        private bool _disposed = false;
         private readonly MedicalClinicDBContext _context;
 
         public AccountRepository(MedicalClinicDBContext context)
@@ -13,9 +16,14 @@ namespace MedicalClinicApp.Repositories
             _context = context;
         }
 
-        public bool CheckAuth(UserViewModel credentials)
+        public async Task<User?> Get(string login)
         {
-            User? user = _context.Users.FirstOrDefault(x => x.Email == credentials.Login);
+            return await _context.Users.FirstOrDefaultAsync(x => x.Email == login);
+        }
+
+        public async Task<bool> CheckAuth(UserViewModel credentials)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == credentials.Login);
             if (user != null)
             {
                 if (AuthService.VerifyPassword(credentials.Password, user.PasswordHash, user.PasswordSalt))
@@ -27,44 +35,39 @@ namespace MedicalClinicApp.Repositories
             return false;
         }
 
-        private bool CheckUserExists(UserViewModel credentials)
+        public async Task Register(UserViewModel credentials)
         {
-            User? user = _context.Users.FirstOrDefault(x => x.Email == credentials.Login);
-            if (user != null)
+            AuthService.CreatePasswordHash(credentials.Password, out byte[] hash, out byte[] salt);
+            var newUser = new User
             {
-                return true;
-            }
+                UserId = null,
+                Email = credentials.Login,
+                PasswordHash = hash,
+                PasswordSalt = salt,
+                RoleId = 3
+            };
 
-            return false;
+            _context.Users.Add(newUser);
+            await _context.SaveChangesAsync();
         }
 
-        public bool Register(UserViewModel credentials)
+        public virtual void Dispose(bool disposing)
         {
-            try
+            if (!_disposed)
             {
-                if (CheckUserExists(credentials))
+                if (disposing)
                 {
-                    return false;
+                    _context.Dispose();
                 }
-
-                AuthService.CreatePasswordHash(credentials.Password, out byte[] hash, out byte[] salt);
-                var newUser = new User
-                {
-                    UserId = null,
-                    Email = credentials.Login,
-                    PasswordHash = hash,
-                    PasswordSalt = salt,
-                    RoleId = 1
-                };
-
-                _context.Users.Add(newUser);
-                _context.SaveChanges();
-                return true;
             }
-            catch
-            {
-                return false;
-            }
+
+            _disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }
