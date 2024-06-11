@@ -1,0 +1,61 @@
+﻿@model MedicalClinicApp.Models.ViewModels.EmployeeViewModel;
+
+<div class="row mb-3">
+    <div class="col-auto me-auto">
+        <h2>Новый работник</h2>
+        <div class="form-text"><i>*</i> - обязательные поля</div>
+    </div>
+    <div class="col-auto">
+        <a asp-controller="Employees" asp-action="Index">Вернуться к списку</a>
+    </div>
+</div>
+
+<form asp-action="Create" asp-controller="Employees" method="post" enctype="multipart/form-data">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email<i>*</i></label>
+            <input type="email" asp-for="Email" class="form-control form-control-sm" placeholder="example@mail.com" required />
+            <span class="badge bg-danger" asp-validation-for="Email"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Password" class="form-label">Пароль<i>*</i></label>
+            <input type="text" asp-for="Password" class="form-control form-control-sm" required />
+            <span class="badge bg-danger" asp-validation-for="Password"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PostId" class="form-label">Должность<i>*</i></label>
+            <select asp-for="PostId" class="form-control form-control-sm" required>
+                <option value="">Выберите должность</option>
+                @foreach (Post post in ViewBag.Posts)
+                {
+                    <option value="@post.PostId">@post.Name</option>
+                }
+            </select>
+            <span class="badge bg-danger" asp-validation-for="PostId"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="FirstName" class="form-label">Имя<i>*</i></label>
+            <input type="text" asp-for="FirstName" class="form-control form-control-sm" required />
+            <span class="badge bg-danger" asp-validation-for="FirstName"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SecondName" class="form-label">Отчество</label>
+            <input type="text" asp-for="SecondName" class="form-control form-control-sm" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="LastName" class="form-label">Фамилия<i>*</i></label>
+            <input type="text" asp-for="LastName" class="form-control form-control-sm" required />
+            <span class="badge bg-danger" asp-validation-for="LastName"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="OnboardingDate" class="form-label">Дата рождения<i>*</i></label>
+            <input type="text" asp-for="OnboardingDate" class="form-control form-control-sm" placeholder="дд.мм.гггг" id="dateOfBirthInput" required />
+            <span class="badge bg-danger" asp-validation-for="OnboardingDate"></span>
+        </div>
+        <div class="mb-3">
+            <input type="submit" value="Сохранить" class="btn btn-outline-secondary" />
+        </div>
+    </div>
+</form>

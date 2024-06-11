@@ -1,0 +1,40 @@
+﻿@model IEnumerable<MedicalClinicApp.Models.ViewModels.EmployeeViewModel>;
+
+<div class="mb-3">
+    <h2>Работники</h2>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <tr>
+            <th>EmployeeId</th>
+            <th>UserId</th>
+            <th>Должность</th>
+            <th>Email</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Фамилия</th>
+            <th>Дата приема на работу</th>
+            <th><a class="btn btn-primary float-end" asp-controller="Employees" asp-action="Create">Добавить</a></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.EmployeeId">@item.EmployeeId</td>
+                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.UserId">@item.UserId</td>
+                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.PostName">@item.PostName</td>
+                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.Email">@item.Email</td>
+                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.FirstName">@item.FirstName</td>
+                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.SecondName">@item.SecondName</td>
+                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.LastName">@item.LastName</td>
+                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.OnboardingDate">@item.OnboardingDate.ToString("dd.MM.yyyy")</td>
+                <td>
+                    <div class="btn-group float-end" role="group">
+                        <a class="btn btn-outline-success" asp-controller="Employees" asp-action="Edit" asp-route-id="@item.EmployeeId">Изменить</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
