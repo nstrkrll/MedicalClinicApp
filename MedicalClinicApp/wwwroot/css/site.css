@@ -41,3 +41,11 @@ body {
     margin: 0;
     height: 40px;
 }
+
+.menu-link {
+    padding-left: 1em;
+}
+
+.menu-link:hover {
+    background-color: lightgray;
+}

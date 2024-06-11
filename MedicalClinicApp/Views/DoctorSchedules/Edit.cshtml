@@ -1,0 +1,42 @@
+﻿@model MedicalClinicApp.Models.ViewModels.DoctorScheduleViewModel;
+
+<div class="row mb-3">
+    <div class="col-auto me-auto">
+        <h2>Редактирование расписания работника</h2>
+        <div class="form-text"><i>*</i> - обязательные поля</div>
+    </div>
+    <div class="col-auto">
+        <a asp-controller="DoctorSchedules" asp-action="Index">Вернуться к списку</a>
+    </div>
+</div>
+
+<form asp-action="Edit" asp-controller="DoctorSchedules" method="post" enctype="multipart/form-data">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        <input type="hidden" asp-for="DoctorScheduleId" />
+        <input type="hidden" asp-for="EmployeeId" />
+        <div class="mb-3">
+            <label asp-for="StartTime" class="form-label">Время начала приема<i>*</i></label>
+            <input type="text" asp-for="StartTime" class="form-control form-control-sm" placeholder="чч:мм" id="timeInput1" required />
+            <span class="badge bg-danger" asp-validation-for="StartTime"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="EndTime" class="form-label">Время конца приема<i>*</i></label>
+            <input type="text" asp-for="EndTime" class="form-control form-control-sm" placeholder="чч:мм" id="timeInput2" required />
+            <span class="badge bg-danger" asp-validation-for="EndTime"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="AppointmentsPerShift" class="form-label">Кол-во приемов в день<i>*</i></label>
+            <input type="text" asp-for="AppointmentsPerShift" class="form-control form-control-sm" required />
+            <span class="badge bg-danger" asp-validation-for="AppointmentsPerShift"></span>
+        </div> 
+        <div class="mb-3">
+            <label asp-for="RoomNumber" class="form-label">Кабинет<i>*</i></label>
+            <input type="text" asp-for="RoomNumber" class="form-control form-control-sm" required />
+            <span class="badge bg-danger" asp-validation-for="RoomNumber"></span>
+        </div>
+        <div class="mb-3">
+            <input type="submit" value="Сохранить" class="btn btn-outline-secondary" />
+        </div>
+    </div>
+</form>

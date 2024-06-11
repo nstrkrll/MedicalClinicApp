@@ -11,7 +11,7 @@ namespace MedicalClinicApp
         public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Patient> Patients { get; set; }
-        public DbSet<DoctorSchedule> DoctorShedules { get; set; }
+        public DbSet<DoctorSchedule> DoctorSchedules { get; set; }
         public DbSet<AppointmentStatus> AppointmentStatus { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<MedicalHistory> MedicalHistory { get; set; }

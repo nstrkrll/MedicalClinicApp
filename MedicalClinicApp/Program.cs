@@ -8,6 +8,7 @@ builder.Services.AddScoped<AccountRepository>();
 builder.Services.AddScoped<PatientRepository>();
 builder.Services.AddScoped<EmployeeRepository>();
 builder.Services.AddScoped<PostRepository>();
+builder.Services.AddScoped<DoctorScheduleRepository>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MedicalClinicDBContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>

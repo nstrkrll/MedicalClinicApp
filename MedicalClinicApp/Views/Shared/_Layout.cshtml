@@ -39,23 +39,34 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
         </div>
         <div class="offcanvas-body">
-            @if (User.Identity.IsAuthenticated)
-            {
-                @switch (@User.Claims.First(x => x.Type == "Role").Value)
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                @if (User.Identity.IsAuthenticated)
                 {
-                    case "1":
-                        <a class="nav-link text-dark" asp-controller="Patients" asp-action="Index">Пациенты</a>
-                        <a class="nav-link text-dark" asp-controller="Employees" asp-action="Index">Работники</a>
-                        <a class="nav-link text-dark" asp-controller="Posts" asp-action="Index">Должности</a>
-                        break;
-                    case "2":
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Главная</a>
-                        break;
-                    case "3":
-                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Главная</a>
-                        break;
+                    @switch (@User.Claims.First(x => x.Type == "Role").Value)
+                    {
+                        case "1":
+                            <li class="nav-item">
+                                <a class="nav-link text-dark menu-link" asp-controller="Patients" asp-action="Index">Пациенты</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark menu-link" asp-controller="Employees" asp-action="Index">Работники</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark menu-link" asp-controller="Posts" asp-action="Index">Должности</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark menu-link" asp-controller="DoctorSchedules" asp-action="Index">Расписание сотрудников</a>
+                            </li>
+                            break;
+                        case "2":
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Главная</a>
+                            break;
+                        case "3":
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Главная</a>
+                            break;
+                    }
                 }
-            }
+            </ul>
         </div>
     </div>
     @if (User.Identity.IsAuthenticated)
@@ -66,7 +77,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
             </div>
             <div class="offcanvas-body">
-                <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Выход</a>
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark menu-link" asp-controller="Account" asp-action="Logout">Выход</a>
+                    </li>
+                </ul>
             </div>
         </div>
     }
@@ -86,6 +101,8 @@
     <script type="text/javascript">
         $("#phoneNumberInput").mask("+375(99)999-99-99");
         $("#dateOfBirthInput").mask("99.99.9999");
+        $("#timeInput1").mask("99:99");
+        $("#timeInput2").mask("99:99");
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

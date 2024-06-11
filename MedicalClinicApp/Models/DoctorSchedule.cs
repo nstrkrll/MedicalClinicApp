@@ -5,7 +5,7 @@ namespace MedicalClinicApp.Models
     public class DoctorSchedule
     {
         [Key]
-        public int? DoctorSheduleId { get; set; }
+        public int? DoctorScheduleId { get; set; }
         public int EmployeeId { get; set; }
         public byte DayOfWeek { get; set; }
         public TimeSpan StartTime { get; set; }
