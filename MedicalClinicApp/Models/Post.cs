@@ -1,8 +1,12 @@
-﻿namespace MedicalClinicApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MedicalClinicApp.Models
 {
     public class Post
     {
-        public int PostId { get; set; }
+        [Key]
+        public int? PostId { get; set; }
         public string Name { get; set; }
+        public ICollection<Employee> Employees { get; set; }
     }
 }

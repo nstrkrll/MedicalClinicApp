@@ -1,13 +1,17 @@
-﻿namespace MedicalClinicApp.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MedicalClinicApp.Models
 {
-    public class DoctorShedule
+    public class DoctorSchedule
     {
-        public int SheduleId { get; set; }
+        [Key]
+        public int? DoctorSheduleId { get; set; }
         public int EmployeeId { get; set; }
         public byte DayOfWeek { get; set; }
         public TimeSpan StartTime { get; set; }
         public TimeSpan EndTime { get; set; }
         public byte AppointmentsPerShift { get; set; }
         public string RoomNumber {  get; set; }
+        public Employee Employee { get; set; }
     }
 }
