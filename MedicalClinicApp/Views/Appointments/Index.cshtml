@@ -1,0 +1,36 @@
+﻿@model IEnumerable<MedicalClinicApp.Models.ViewModels.AppointmentViewModel>;
+
+<div class="mb-3">
+    <h2>Записи к врачам</h2>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <tr>
+            <th>Врач</th>
+            <th>Пациент</th>
+            <th>Дата и время приема</th>
+            <th>Кабинет</th>
+            <th>Статус</th>
+            <th>
+                @if (User.Claims.First(x => x.Type == "Role").Value == "3")
+                {
+                    <a class="btn btn-primary float-end" asp-controller="Appointments" asp-action="SelectADoctor">Записаться на прием</a>
+                }
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.EmployeePostName @item.EmployeeFullName</td>
+                <td>@item.PatientFullName</td>
+                <td>@item.AppointmentDate.ToString("dd.MM.yyyy hh:mm")</td>
+                <td>@item.RoomNumber</td>
+                <td>@item.AppointmentStatusName</td>
+                <td>
+                </td>
+            </tr>
+        }
+    </table>
+</div>

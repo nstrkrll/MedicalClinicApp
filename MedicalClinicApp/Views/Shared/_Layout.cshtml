@@ -42,7 +42,7 @@
             <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 @if (User.Identity.IsAuthenticated)
                 {
-                    @switch (@User.Claims.First(x => x.Type == "Role").Value)
+                    @switch (User.Claims.First(x => x.Type == "Role").Value)
                     {
                         case "1":
                             <li class="nav-item">
@@ -57,12 +57,19 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark menu-link" asp-controller="DoctorSchedules" asp-action="Index">Расписание сотрудников</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark menu-link" asp-controller="Appointments" asp-action="Index">Запись на прием</a>
+                            </li>
                             break;
                         case "2":
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Главная</a>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark menu-link" asp-controller="Appointments" asp-action="Index">Запись на прием</a>
+                            </li>
                             break;
                         case "3":
-                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Главная</a>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark menu-link" asp-controller="Appointments" asp-action="Index">Запись на прием</a>
+                            </li>
                             break;
                     }
                 }
@@ -101,6 +108,7 @@
     <script type="text/javascript">
         $("#phoneNumberInput").mask("+375(99)999-99-99");
         $("#dateOfBirthInput").mask("99.99.9999");
+        $("#appointmentDate").mask("99.99.9999");
         $("#timeInput1").mask("99:99");
         $("#timeInput2").mask("99:99");
     </script>
