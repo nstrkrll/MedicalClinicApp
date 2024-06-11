@@ -5,11 +5,21 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<AccountRepository>();
+builder.Services.AddScoped<PatientRepository>();
+builder.Services.AddScoped<EmployeeRepository>();
+builder.Services.AddScoped<PostRepository>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MedicalClinicDBContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
 {
     options.LoginPath = new PathString("/Account/Auth");
+});
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireClaim("Role", "1"));
+    options.AddPolicy("Employee", policy => policy.RequireClaim("Role", "2"));
+    options.AddPolicy("Patient", policy => policy.RequireClaim("Role", "3"));
 });
 
 var app = builder.Build();
