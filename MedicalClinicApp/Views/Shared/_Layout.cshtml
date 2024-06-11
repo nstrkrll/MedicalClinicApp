@@ -39,18 +39,37 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
         </div>
         <div class="offcanvas-body">
-            Главное меню
+            @if (User.Identity.IsAuthenticated)
+            {
+                @switch (@User.Claims.First(x => x.Type == "Role").Value)
+                {
+                    case "1":
+                        <a class="nav-link text-dark" asp-controller="Patients" asp-action="Index">Пациенты</a>
+                        <a class="nav-link text-dark" asp-controller="Employees" asp-action="Index">Работники</a>
+                        <a class="nav-link text-dark" asp-controller="Posts" asp-action="Index">Должности</a>
+                        break;
+                    case "2":
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Главная</a>
+                        break;
+                    case "3":
+                        <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Главная</a>
+                        break;
+                }
+            }
         </div>
     </div>
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasProfile" aria-labelledby="offcanvasProfileLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasProfileLabel">@User.Identity.Name</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasProfile" aria-labelledby="offcanvasProfileLabel">
+            <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasProfileLabel">@User.Claims.First(x => x.Type == "Email").Value</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"></button>
+            </div>
+            <div class="offcanvas-body">
+                <a class="nav-link text-dark" asp-controller="Account" asp-action="Logout">Выход</a>
+            </div>
         </div>
-        <div class="offcanvas-body">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Выход</a>
-        </div>
-    </div>
+    }
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -58,9 +77,16 @@
         </main>
     </div>
 
+    
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/plugins/jquery.maskedinput.js"></script>
+    <script type="text/javascript">
+        $("#phoneNumberInput").mask("+375(99)999-99-99");
+        $("#dateOfBirthInput").mask("99.99.9999");
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
