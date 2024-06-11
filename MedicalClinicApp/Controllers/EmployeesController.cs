@@ -47,9 +47,9 @@ namespace MedicalClinicApp.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var patients = await _employeeRepository.Get(id);
+            var employee = await _employeeRepository.Get(id);
             ViewBag.Posts = await _employeeRepository.GetPostList();
-            return View(patients);
+            return View(employee);
         }
 
         [HttpPost]
