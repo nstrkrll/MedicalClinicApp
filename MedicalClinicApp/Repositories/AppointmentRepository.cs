@@ -1,7 +1,6 @@
 ﻿using MedicalClinicApp.Models;
 using MedicalClinicApp.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MedicalClinicApp.Repositories
 {
@@ -22,7 +21,7 @@ namespace MedicalClinicApp.Repositories
                 .FirstOrDefaultAsync(x => x.User.Email == email);
             if (user == null)
             {
-                return null;
+                return -1;
             }
 
             return user.PatientId;
@@ -60,7 +59,7 @@ namespace MedicalClinicApp.Repositories
                 .FirstOrDefaultAsync();
             if (patient == null)
             {
-                return null;
+                return new List<AppointmentViewModel>();
             }
 
             return (await GetAll()).Where(x => x.PatientId == patient.PatientId);
@@ -74,7 +73,7 @@ namespace MedicalClinicApp.Repositories
                 .FirstOrDefaultAsync();
             if (employee == null)
             {
-                return null;
+                return new List<AppointmentViewModel>();
             }
 
             return (await GetAll()).Where(x => x.EmployeeId == employee.EmployeeId);
@@ -102,14 +101,14 @@ namespace MedicalClinicApp.Repositories
             var schedule = await _context.DoctorSchedules.FirstOrDefaultAsync(x => x.EmployeeId == employeeId && x.DayOfWeek == dayOfWeek);
             if (schedule == null)
             {
-                return null;
+                return new List<TimeSlotViewModel>();
             }
 
             if (date.Date == DateTime.Now.Date)
             {
                 if (schedule.StartTime <= DateTime.Now.TimeOfDay)
                 {
-                    return null;
+                    return new List<TimeSlotViewModel>();
                 }
             }
 
@@ -127,7 +126,7 @@ namespace MedicalClinicApp.Repositories
             }
 
             var appointments = await _context.Appointments.Where(x => x.EmployeeId == employeeId && x.AppointmentDate.Date == date.Date).ToListAsync();
-            slots = slots.Where(x => !appointments.Any(y => y.AppointmentDate == x.DateTime)).ToList();
+            slots = slots.Where(x => !appointments.Where(y => y.AppointmentStatusId != 2).Any(y => y.AppointmentDate == x.DateTime)).ToList();
             return slots;
         }
 
@@ -147,10 +146,10 @@ namespace MedicalClinicApp.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task ChangeStatus(int appointmentId, int statusId)
+        public async Task CancelAppointment(int id)
         {
-            var appointment = _context.Appointments.FirstOrDefault(x => x.AppointmentId == appointmentId);
-            appointment.AppointmentStatusId = statusId;
+            var appointment = await _context.Appointments.FirstOrDefaultAsync(x => x.AppointmentId == id);
+            appointment.AppointmentStatusId = 2;
             _context.Appointments.Update(appointment);
             await _context.SaveChangesAsync();
         }
