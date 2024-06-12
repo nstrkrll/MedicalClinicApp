@@ -1,46 +1,50 @@
 ﻿@model IEnumerable<MedicalClinicApp.Models.ViewModels.DoctorScheduleViewModel>;
 
-<div class="mb-3">
-    <h2>Расписание врачей</h2>
-</div>
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="mb-3">
+            <h2>Расписание врачей</h2>
+        </div>
 
-<div class="table-responsive">
-    <table class="table table-striped align-middle">
-        <tr>
-            <th>DoctorScheduleId</th>
-            <th>EmployeeId</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <th>Фамилия</th>
-            <th>Должность</th>
-            <th>День недели</th>
-            <th>Приемов в день</th>
-            <th>Начало приема</th>
-            <th>Конец приема</th>
-            <th>Номер кабинета</th>
-            <th></th>
-        </tr>
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <tr>
+                    <th>DoctorScheduleId</th>
+                    <th>EmployeeId</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Фамилия</th>
+                    <th>Должность</th>
+                    <th>День недели</th>
+                    <th>Приемов в день</th>
+                    <th>Начало приема</th>
+                    <th>Конец приема</th>
+                    <th>Номер кабинета</th>
+                    <th></th>
+                </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.DoctorScheduleId">@item.DoctorScheduleId</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.EmployeeId">@item.EmployeeId</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.FirstName">@item.FirstName</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.SecondName">@item.SecondName</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.LastName">@item.LastName</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.PostName">@item.PostName</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.DayOfWeek">@item.DayOfWeek</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.AppointmentsPerShift">@item.AppointmentsPerShift</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.StartTime">@item.StartTime</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.EndTime">@item.EndTime</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.RoomNumber">@item.RoomNumber</td>
-                <td>
-                    <div class="btn-group float-end" role="group">
-                        <a class="btn btn-outline-success" asp-controller="DoctorSchedules" asp-action="Edit" asp-route-id="@item.EmployeeId">Изменить</a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </table>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.DoctorScheduleId">@item.DoctorScheduleId</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.EmployeeId">@item.EmployeeId</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.FirstName">@item.FirstName</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.SecondName">@item.SecondName</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.LastName">@item.LastName</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.PostName">@item.PostName</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.DayOfWeek">@item.DayOfWeek</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.AppointmentsPerShift">@item.AppointmentsPerShift</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.StartTime">@item.StartTime</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.EndTime">@item.EndTime</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.RoomNumber">@item.RoomNumber</td>
+                        <td>
+                            <div class="btn-group float-end" role="group">
+                                <a class="btn btn-outline-success" asp-controller="DoctorSchedules" asp-action="Edit" asp-route-id="@item.EmployeeId">Изменить</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
 </div>

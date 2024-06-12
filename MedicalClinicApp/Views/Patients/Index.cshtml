@@ -1,42 +1,46 @@
 ﻿@model IEnumerable<MedicalClinicApp.Models.ViewModels.PatientViewModel>;
 
-<div class="mb-3">
-    <h2>Пациенты</h2>
-</div>
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="mb-3">
+            <h2>Пациенты</h2>
+        </div>
 
-<div class="table-responsive">
-    <table class="table table-striped align-middle">
-        <tr>
-            <th>PatientId</th>
-            <th>UserId</th>
-            <th>Email</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <th>Фамилия</th>
-            <th>Номер телефона</th>
-            <th>Дата рождения</th>
-            <th>Пол</th>
-            <th><a class="btn btn-primary float-end" asp-controller="Patients" asp-action="Create">Добавить</a></th>
-        </tr>
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <tr>
+                    <th>PatientId</th>
+                    <th>UserId</th>
+                    <th>Email</th>
+                    <th>Имя</th>
+                    <th>Отчество</th>
+                    <th>Фамилия</th>
+                    <th>Номер телефона</th>
+                    <th>Дата рождения</th>
+                    <th>Пол</th>
+                    <th><a class="btn btn-primary float-end" asp-controller="Patients" asp-action="Create">Добавить</a></th>
+                </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.PatientId">@item.PatientId</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.UserId">@item.UserId</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.Email">@item.Email</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.FirstName">@item.FirstName</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.SecondName">@item.SecondName</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.LastName">@item.LastName</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.PhoneNumber">@item.PhoneNumber</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.DateOfBirth">@item.DateOfBirth.ToString("dd.MM.yyyy")</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.Gender">@(item.Gender ? "М" : "Ж")</td>
-                <td>
-                    <div class="btn-group float-end" role="group">
-                        <a class="btn btn-outline-success" asp-controller="Patients" asp-action="Edit" asp-route-id="@item.PatientId">Изменить</a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </table>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.PatientId">@item.PatientId</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.UserId">@item.UserId</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.Email">@item.Email</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.FirstName">@item.FirstName</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.SecondName">@item.SecondName</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.LastName">@item.LastName</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.PhoneNumber">@item.PhoneNumber</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.DateOfBirth">@item.DateOfBirth.ToString("dd.MM.yyyy")</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.Gender">@(item.Gender ? "М" : "Ж")</td>
+                        <td>
+                            <div class="btn-group float-end" role="group">
+                                <a class="btn btn-outline-success" asp-controller="Patients" asp-action="Edit" asp-route-id="@item.PatientId">Изменить</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
 </div>

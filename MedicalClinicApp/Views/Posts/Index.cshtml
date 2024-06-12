@@ -1,28 +1,32 @@
 ﻿@model IEnumerable<MedicalClinicApp.Models.ViewModels.PostViewModel>;
 
-<div class="mb-3">
-    <h2>Должность</h2>
-</div>
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="mb-3">
+            <h2>Должность</h2>
+        </div>
 
-<div class="table-responsive">
-    <table class="table table-striped align-middle">
-        <tr>
-            <th>PostId</th>
-            <th>Должность</th>
-            <th><a class="btn btn-primary float-end" asp-controller="Posts" asp-action="Create">Добавить</a></th>
-        </tr>
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <tr>
+                    <th>PostId</th>
+                    <th>Должность</th>
+                    <th><a class="btn btn-primary float-end" asp-controller="Posts" asp-action="Create">Добавить</a></th>
+                </tr>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.PostId">@item.PostId</td>
-                <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.Name">@item.Name</td>
-                <td>
-                    <div class="btn-group float-end" role="group">
-                        <a class="btn btn-outline-success" asp-controller="Posts" asp-action="Edit" asp-route-id="@item.PostId">Изменить</a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </table>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.PostId">@item.PostId</td>
+                        <td data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-placement="top" data-bs-content="@item.Name">@item.Name</td>
+                        <td>
+                            <div class="btn-group float-end" role="group">
+                                <a class="btn btn-outline-success" asp-controller="Posts" asp-action="Edit" asp-route-id="@item.PostId">Изменить</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
 </div>

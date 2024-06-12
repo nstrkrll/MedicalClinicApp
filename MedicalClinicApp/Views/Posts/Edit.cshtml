@@ -1,26 +1,30 @@
 ﻿@model MedicalClinicApp.Models.ViewModels.PostViewModel;
 
-<div class="row mb-3">
-    <div class="col-auto me-auto">
-        <h2>Редактирование должности</h2>
-        <div class="form-text"><i>*</i> - обязательные поля</div>
-    </div>
-    <div class="col-auto">
-        <a asp-controller="Posts" asp-action="Index">Вернуться к списку</a>
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-auto me-auto">
+                <h2>Редактирование должности</h2>
+                <div class="form-text"><i>*</i> - обязательные поля</div>
+            </div>
+            <div class="col-auto">
+                <a asp-controller="Posts" asp-action="Index">Вернуться к списку</a>
+            </div>
+        </div>
+
+        <form asp-action="Edit" asp-controller="Posts" method="post" enctype="multipart/form-data">
+            <div class="validation" asp-validation-summary="ModelOnly"></div>
+            <div>
+                <input type="hidden" asp-for="PostId" />
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Должность<i>*</i></label>
+                    <input type="text" asp-for="Name" class="form-control form-control-sm" required />
+                    <span class="badge bg-danger" asp-validation-for="Name"></span>
+                </div>
+                <div class="mb-3">
+                    <input type="submit" value="Сохранить" class="btn btn-outline-secondary" />
+                </div>
+            </div>
+        </form>
     </div>
 </div>
-
-<form asp-action="Edit" asp-controller="Posts" method="post" enctype="multipart/form-data">
-    <div class="validation" asp-validation-summary="ModelOnly"></div>
-    <div>
-        <input type="hidden" asp-for="PostId" />
-        <div class="mb-3">
-            <label asp-for="Name" class="form-label">Должность<i>*</i></label>
-            <input type="text" asp-for="Name" class="form-control form-control-sm" required />
-            <span class="badge bg-danger" asp-validation-for="Name"></span>
-        </div>
-        <div class="mb-3">
-            <input type="submit" value="Сохранить" class="btn btn-outline-secondary" />
-        </div>
-    </div>
-</form>
