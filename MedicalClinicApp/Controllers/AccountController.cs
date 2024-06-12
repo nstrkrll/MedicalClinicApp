@@ -28,6 +28,12 @@ namespace MedicalClinicApp.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Auth(UserViewModel credentials)
