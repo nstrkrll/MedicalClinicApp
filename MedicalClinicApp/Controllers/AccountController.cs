@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using MedicalClinicApp.Repositories;
 using MedicalClinicApp.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MedicalClinicApp.Controllers
 {
@@ -82,10 +83,57 @@ namespace MedicalClinicApp.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(id));
         }
 
+        [Authorize]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Auth", "Account");
+        }
+
+        [Authorize]
+        public async Task<IActionResult> PatientProfile()
+        {
+            var profile = await _accountRepository.GetPatientProfile(User.Claims.First(x => x.Type == "Email").Value);
+            return View(profile);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> PatientProfile(PatientProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var email = User.Claims.First(x => x.Type == "Email").Value;
+                await _accountRepository.EditPatientProfile(model, email);
+                if (User.Claims.First(x => x.Type == "Role").Value == "4")
+                {
+                    await Authenticate(email);
+                }
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> EmployeeProfile()
+        {
+            var profile = await _accountRepository.GetEmployeeProfile(User.Claims.First(x => x.Type == "Email").Value);
+            return View(profile);
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> EmployeeProfile(EmployeePreviewViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _accountRepository.EditEmployeeProfile(model);
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View(model);
         }
     }
 }

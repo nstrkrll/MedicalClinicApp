@@ -86,18 +86,19 @@ namespace MedicalClinicApp.Repositories
 
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-            var employee = new Employee
-            {
-                UserId = user.UserId,
-                PostId = model.PostId,
-                FirstName = model.FirstName,
-                SecondName = model.SecondName,
-                LastName = model.LastName,
-                OnboardingDate = model.OnboardingDate,
-            };
+            //var employee = new Employee
+            //{
+            //    UserId = user.UserId,
+            //    PostId = model.PostId,
+            //    FirstName = model.FirstName,
+            //    SecondName = model.SecondName,
+            //    LastName = model.LastName,
+            //    OnboardingDate = model.OnboardingDate,
+            //};
 
-            _context.Employees.Add(employee);
-            await _context.SaveChangesAsync();
+            //_context.Employees.Add(employee);
+            //await _context.SaveChangesAsync();
+            await _context.AddEmployeeAsync((int)user.UserId, model.FirstName, model.SecondName, model.LastName, model.OnboardingDate, (int)model.PostId);
         }
 
         public async Task Edit(EmployeeViewModel model)

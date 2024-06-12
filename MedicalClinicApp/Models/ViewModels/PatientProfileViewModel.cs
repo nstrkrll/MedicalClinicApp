@@ -1,11 +1,8 @@
 ﻿namespace MedicalClinicApp.Models.ViewModels
 {
-    public class PatientViewModel
+    public class PatientProfileViewModel
     {
-        public int? PatientId {  get; set; }
-        public int? UserId { get; set; }
-        public string Email { get; set; }
-        public string? Password { get; set; }
+        public int? PatientId { get; set; }
         public string FirstName { get; set; }
         public string? SecondName { get; set; }
         public string LastName { get; set; }

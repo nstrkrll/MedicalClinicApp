@@ -1,0 +1,32 @@
+﻿@model MedicalClinicApp.Models.ViewModels.EmployeePreviewViewModel
+
+<div class="row mb-3">
+    <div class="col-auto me-auto">
+        <h2>Профиль</h2>
+        <div class="form-text"><i>*</i> - обязательные поля</div>
+    </div>
+</div>
+
+<form asp-action="EmployeeProfile" asp-controller="Account" method="post" enctype="multipart/form-data">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        <input type="hidden" asp-for="EmployeeId" />
+        <div class="mb-3">
+            <label asp-for="FirstName" class="form-label">Имя<i>*</i></label>
+            <input type="text" asp-for="FirstName" class="form-control form-control-sm" required />
+            <span class="badge bg-danger" asp-validation-for="FirstName"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="SecondName" class="form-label">Отчество</label>
+            <input type="text" asp-for="SecondName" class="form-control form-control-sm" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="LastName" class="form-label">Фамилия<i>*</i></label>
+            <input type="text" asp-for="LastName" class="form-control form-control-sm" required />
+            <span class="badge bg-danger" asp-validation-for="LastName"></span>
+        </div>
+        <div class="mb-3">
+            <input type="submit" value="Сохранить" class="btn btn-outline-secondary" />
+        </div>
+    </div>
+</form>
