@@ -84,8 +84,16 @@ namespace MedicalClinicApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            ViewBag.TimeSlots = await _appointmentRepository.GetTimeSlots(model.EmployeeId, model.SelectedSlot);
+            ViewBag.TimeSlots = _appointmentRepository.GetTimeSlots(model.EmployeeId, model.SelectedSlot);
             return View(model);
+        }
+
+        [Authorize(Policy = "Patient")]
+        [HttpGet]
+        public async Task<IActionResult> CancelAppointment(int id)
+        {
+            await _appointmentRepository.CancelAppointment(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

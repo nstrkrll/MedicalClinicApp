@@ -1,4 +1,8 @@
-﻿@model IEnumerable<MedicalClinicApp.Models.ViewModels.AppointmentViewModel>;
+﻿@model IEnumerable<MedicalClinicApp.Models.ViewModels.AppointmentViewModel>
+
+@{
+    var role = User.Claims.First(x => x.Type == "Role").Value;
+}
 
 <div class="mb-3">
     <h2>Записи к врачам</h2>
@@ -12,12 +16,12 @@
             <th>Дата и время приема</th>
             <th>Кабинет</th>
             <th>Статус</th>
-            <th>
-                @if (User.Claims.First(x => x.Type == "Role").Value == "3")
-                {
+            @if (role == "3")
+            {
+                <th>
                     <a class="btn btn-primary float-end" asp-controller="Appointments" asp-action="SelectADoctor">Записаться на прием</a>
-                }
-            </th>
+                </th>
+            }
         </tr>
 
         @foreach (var item in Model)
@@ -28,8 +32,15 @@
                 <td>@item.AppointmentDate.ToString("dd.MM.yyyy hh:mm")</td>
                 <td>@item.RoomNumber</td>
                 <td>@item.AppointmentStatusName</td>
-                <td>
-                </td>
+                @if (role == "3")
+                {
+                    <td>
+                        @if (item.AppointmentStatusId != 2)
+                        {
+                            <a class="btn btn-primary float-end" asp-controller="Appointments" asp-action="CancelAppointment" asp-route-id="@item.AppointmentId">Отменить</a>
+                        }
+                    </td>
+                }
             </tr>
         }
     </table>
