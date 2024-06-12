@@ -10,6 +10,7 @@ builder.Services.AddScoped<EmployeeRepository>();
 builder.Services.AddScoped<PostRepository>();
 builder.Services.AddScoped<DoctorScheduleRepository>();
 builder.Services.AddScoped<AppointmentRepository>();
+builder.Services.AddScoped<MedicalHistoryRepository>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MedicalClinicDBContext>(options => options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
@@ -24,6 +25,13 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("Patient", policy => policy.RequireClaim("Role", "3"));
 });
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Auth";
+    options.LogoutPath = "/Account/Logout";
+    options.AccessDeniedPath = "/Account/AccessDenied";
+});
+
 var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
@@ -36,4 +44,12 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthorization();
 app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
+app.UseStatusCodePages(async context =>
+{
+    if (context.HttpContext.Response.StatusCode == 404)
+    {
+        context.HttpContext.Response.Redirect("/Home/NotFound");
+    }
+});
+
 app.Run();
