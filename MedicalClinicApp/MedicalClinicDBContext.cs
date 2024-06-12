@@ -1,4 +1,5 @@
 ﻿using MedicalClinicApp.Models;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata;
 
@@ -56,6 +57,33 @@ namespace MedicalClinicApp
 
             modelBuilder.Entity<Employee>()
                 .ToTable(x => x.UseSqlOutputClause(false));
+        }
+
+        public async Task AddPatientAsync(int userId, string firstName, string secondName, string lastName, string phoneNumber, DateTime dateOfBirth, bool gender)
+        {
+            var userIdParam = new SqlParameter("@UserId", userId);
+            var firstNameParam = new SqlParameter("@FirstName", firstName);
+            var secondNameParam = new SqlParameter("@SecondName", secondName ?? (object)DBNull.Value);
+            var lastNameParam = new SqlParameter("@LastName", lastName);
+            var phoneNumberParam = new SqlParameter("@PhoneNumber", phoneNumber);
+            var dateOfBirthParam = new SqlParameter("@DateOfBirth", dateOfBirth);
+            var genderParam = new SqlParameter("@Gender", gender);
+
+            await Database.ExecuteSqlRawAsync("EXEC AddPatient @UserId, @FirstName, @SecondName, @LastName, @PhoneNumber, @DateOfBirth, @Gender",
+                userIdParam, firstNameParam, secondNameParam, lastNameParam, phoneNumberParam, dateOfBirthParam, genderParam);
+        }
+
+        public async Task AddEmployeeAsync(int userId, string firstName, string secondName, string lastName, DateTime onboardingDate, int postId)
+        {
+            var userIdParam = new SqlParameter("@UserId", userId);
+            var firstNameParam = new SqlParameter("@FirstName", firstName);
+            var secondNameParam = new SqlParameter("@SecondName", secondName ?? (object)DBNull.Value);
+            var lastNameParam = new SqlParameter("@LastName", lastName);
+            var onboardingDateParam = new SqlParameter("@OnboardingDate", onboardingDate);
+            var postIdParam = new SqlParameter("@PostId", postId);
+
+            await Database.ExecuteSqlRawAsync("EXEC AddEmployee @UserId, @FirstName, @SecondName, @LastName, @OnboardingDate, @PostId",
+                userIdParam, firstNameParam, secondNameParam, lastNameParam, onboardingDateParam, postIdParam);
         }
     }
 }
