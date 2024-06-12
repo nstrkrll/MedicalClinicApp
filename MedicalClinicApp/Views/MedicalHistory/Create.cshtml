@@ -1,0 +1,47 @@
+﻿@using MedicalClinicApp.Models.ViewModels
+@model MedicalClinicApp.Models.ViewModels.MedicalHistoryViewModel;
+
+<div class="row mb-3">
+    <div class="col-auto me-auto">
+        <h2>Новая запись</h2>
+        <div class="form-text"><i>*</i> - обязательные поля</div>
+    </div>
+    <div class="col-auto">
+        <a asp-controller="MedicalHistory" asp-action="Index">Вернуться к списку</a>
+    </div>
+</div>
+
+<form asp-action="Create" asp-controller="MedicalHistory" method="post" enctype="multipart/form-data">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        <div class="mb-3">
+            <label asp-for="AppointmentId" class="form-label">Прием<i>*</i></label>
+            <select asp-for="AppointmentId" class="form-control form-control-sm" required>
+                <option value="">Выберите прием</option>
+                @foreach (AppointmentViewModel appointment in ViewBag.Appointments)
+                {
+                    <option value="@appointment.AppointmentId">Прием пациента @appointment.PatientFullName @appointment.AppointmentDate</option>
+                }
+            </select>
+            <span class="badge bg-danger" asp-validation-for="AppointmentId"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="PatientComplaints" class="form-label">Жалобы<i>*</i></label>
+            <textarea asp-for="PatientComplaints" class="form-control form-control-sm" required ></textarea>
+            <span class="badge bg-danger" asp-validation-for="PatientComplaints"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Diagnosis" class="form-label">Диагноз<i>*</i></label>
+            <textarea asp-for="Diagnosis" class="form-control form-control-sm" required /></textarea>
+            <span class="badge bg-danger" asp-validation-for="Diagnosis"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Treatment" class="form-label">Лечение<i>*</i></label>
+            <textarea asp-for="Treatment" class="form-control form-control-sm" required /></textarea>
+            <span class="badge bg-danger" asp-validation-for="Treatment"></span>
+        </div>
+        <div class="mb-3">
+            <input type="submit" value="Сохранить" class="btn btn-outline-secondary" />
+        </div>
+    </div>
+</form>

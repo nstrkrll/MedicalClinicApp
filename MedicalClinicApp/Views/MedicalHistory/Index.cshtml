@@ -1,0 +1,64 @@
+﻿@model IEnumerable<MedicalClinicApp.Models.ViewModels.MedicalHistoryPreviewViewModel>;
+
+@{
+    var role = User.Claims.First(x => x.Type == "Role").Value;
+}
+
+<div class="mb-3">
+    <h2>История болезней</h2>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <tr>
+            @if (role == "2" || role == "1")
+            {
+                <th>Врач</th>
+            }
+
+            @if (role == "3" || role == "1")
+            {
+                <th>Пациент</th>
+            }
+
+            <th>Дата и время приема</th>
+            <th>Жалобы</th>
+            <th>Диагноз</th>
+            <th>Лечение</th>
+            @if (role == "2")
+            {
+                <th>
+                    <a class="btn btn-primary float-end" asp-controller="MedicalHistory" asp-action="Create">Добавить запись</a>
+                </th>
+            }
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                @if (role == "2" || role == "1")
+                {
+                    <td>@item.EmployeePostName @item.EmployeeFullName</td>
+                }
+
+                @if (role == "3" || role == "1")
+                {
+                    <td>@item.PatientFullName</td>
+                }
+
+                <td>@item.AppointmentDate.ToString("dd.MM.yyyy hh:mm")</td>
+                <td>@item.PatientComplaints</td>
+                <td>@item.Diagnosis</td>
+                <td>@item.Treatment</td>
+                @if (role == "2")
+                {
+                    <td>
+                        <div class="btn-group float-end" role="group">
+                            <a class="btn btn-outline-success" asp-controller="MedicalHistory" asp-action="Edit" asp-route-id="@item.MedicalHistoryId">Изменить</a>
+                        </div>
+                    </td>
+                }
+            </tr>
+        }
+    </table>
+</div>
